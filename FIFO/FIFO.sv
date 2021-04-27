@@ -3,12 +3,10 @@ module FIFO (input clk , input reset , input wr_en , input rd_en , input logic [
 	reg[7:0] data[4];
 	reg[2:0] w_addr, r_addr;
 	 
-	
 	assign empty = (w_addr == r_addr);
 	assign full = ((w_addr[1:0] == r_addr[1:0]) && (w_addr[2] ^ r_addr[2]));
 	assign overflow = ((~reset)&&(full && wr_en));
 	assign underflow = ((~reset)&&(empty && rd_en));
-
 	always@(posedge clk) begin
 		if(reset) begin
 			w_addr <= 0;
@@ -33,7 +31,5 @@ module FIFO (input clk , input reset , input wr_en , input rd_en , input logic [
 			else
 				$display("ERROR @ %t" , $time);
 		end
-	end
-	
-
+	end	
 endmodule
